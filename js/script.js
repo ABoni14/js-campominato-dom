@@ -39,8 +39,9 @@ function createSquare(target){
     sq.classList.add("hard");
   }
 
+  
   sq.addEventListener("click", clickCell);
-
+  
 
   target.append(sq);
   return sq;
@@ -83,7 +84,20 @@ function generateBombs(bombs) {
 
   function clickCell(event){
     console.log(event.target.innerText);
-    this.classList.add("clicked");
+    console.log(event);
+    let prova = parseInt(event.target.innerText);
+    if(bombs.includes(prova)){
+      this.classList.add("wrong");
+      return container.append("Hai perso, ritenta")
+    } else {
+      this.classList.add("clicked");
+    }
+    // this.classList.add("clicked");
+  }
+
+  function clickCellWrong(event){
+    console.log(event.target.innerText);
+    this.classList.add("wrong");
   }
   
 
