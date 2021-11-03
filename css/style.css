@@ -1,0 +1,46 @@
+header{
+  height: 90px;
+  padding: 15px 30px;
+}
+
+.logo img{
+  width: 60px;
+}
+
+main{
+  background-color: #70ffd5;
+  height: calc(100vh - 130px);
+}
+
+.ab-container{
+  width: 500px;
+  height: 500px;
+}
+
+footer{
+  height: 40px;
+}
+
+.square{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.square.easy{
+  width: calc(100% / 10);
+  height: calc(100% / 10);
+}
+
+.square.normal{
+  width: calc(100% / 9);
+  height: calc(100% / 9);
+}
+
+.square.hard{
+  width: calc(100% / 7);
+  height: calc(100% / 7);
+}
