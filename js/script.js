@@ -4,6 +4,10 @@ const button = document.getElementById("button");
 const listNumbers = [];
 let difficolta = document.getElementById("difficolta");
 let bombs = [];
+let contatore = 0;
+const tentativi = [];
+const tentativiMax = numberCellBombs - 16;
+console.log(tentativiMax);
 
 button.addEventListener("click",function(){
   console.log(difficolta.value);
@@ -23,7 +27,6 @@ button.addEventListener("click",function(){
   bombs = generateBombs(bombs);
   console.log(bombs);
 
-
   init(boxNumber);
 
 })
@@ -39,10 +42,8 @@ function createSquare(target){
     sq.classList.add("hard");
   }
 
-  
   sq.addEventListener("click", clickCell);
   
-
   target.append(sq);
   return sq;
 }
@@ -81,23 +82,67 @@ function generateBombs(bombs) {
     return cellBombs;
   }
   
-
   function clickCell(event){
     console.log(event.target.innerText);
     console.log(event);
-    let prova = parseInt(event.target.innerText);
-    if(bombs.includes(prova)){
-      this.classList.add("wrong");
-      return container.append("Hai perso, ritenta")
+
+    const cellValue = parseInt(event.target.innerText);
+    if(bombs.includes(cellValue)){
+      endGame();
     } else {
-      this.classList.add("clicked");
+      if(!tentativi.includes(cellValue)){
+        contatore++;
+        tentativi.push(cellValue);
+        this.classList.add("clicked");
+
+        if(tentativi === tentativiMax){
+          endGame();
+        }
+      }
+
+      console.log(tentativi);
     }
-    // this.classList.add("clicked");
+
+
+    // let prova = parseInt(event.target.innerText);
+    // if(bombs.includes(prova)){
+    //   this.classList.add("wrong");
+    //   return container.append("Hai perso, ritenta")
+    // } else {
+    //   this.classList.add("clicked");
+    // }
   }
 
   function clickCellWrong(event){
     console.log(event.target.innerText);
     this.classList.add("wrong");
+  }
+
+
+  function endGame(){
+    console.log("END");
+    const cells = document.getElementsByClassName("square");
+    console.log(cells);
+
+    for (let i = 0; i < cells.length; i++){
+
+      if(bombs.includes(i + 1)){
+        cells[i].classList.add("wrong");
+      }
+      cells[i].removeEventListener("click", clickCell)
+    }
+
+    let msg = "";
+    if(tentativi === tentativiMax){
+      msg = "Complimenti! Hai vinto!"
+    } else{
+      msg = `Hai perso! Hai fatto ${contatore} tentativi`
+    }
+
+
+    const output = document.createElement("div");
+    output.innerHTML = `<h4>${msg}</h4>`;
+    document.querySelector(".ab-container").append(output);
   }
   
 
